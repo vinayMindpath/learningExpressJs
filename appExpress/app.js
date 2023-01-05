@@ -3,13 +3,36 @@ const express = require("express");
 // const { emitWarning } = require("process");
 const app = express();
 
-app.get("/", (request, response) => {
-  console.log("user entered");
-  //   response.sendStatus(500);
-  //   response.status(404).send("hii");
-  response.send("<h1>Welcome to server</h1>");
-  response.download("package.json");
-  response.render("path to the file");
+// importing middleware
+const logger = require("./logger");
+const authorize = require("./middleware2");
+
+// pass middleware to every get method
+app.use([logger, authorize]);
+// Home route
+app.get("/", (req, res) => {
+  res.send("<h1>Home</h1>");
+});
+
+// about route
+app.get("/about", (req, res) => {
+  res.send("<h1>Abouts</h1>");
+});
+
+// api/products router
+app.get("/api/products", (req, res) => {
+  res.send("<h1>Product list</h1>");
+});
+
+// item
+app.get("/api/items", (req, res) => {
+  console.log(req.user);
+  res.send("<h1>Items</h1>");
+});
+
+// api
+app.get("/api", (req, res) => {
+  res.send("<h1>Apis</h1>");
 });
 
 app.listen(3000, () => {
