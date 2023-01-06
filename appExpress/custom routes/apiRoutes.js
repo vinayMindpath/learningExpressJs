@@ -2,7 +2,7 @@
 const express = require("express");
 const routes = express.Router();
 // get the user data
-const user = require("../data");
+const user = require("../custom data/data");
 
 // api/products router
 routes.get("/products", (req, res) => {
