@@ -10,7 +10,7 @@ const authorize = require("./middleware2");
 // pass middleware to every get method
 app.use(express.static("./public"));
 app.use([logger, authorize]);
-app.use(morgan("dev"));
+app.use(morgan("tiny"));
 // Home route
 app.get("/", (req, res) => {
   res.send("<h1>Home</h1>");
