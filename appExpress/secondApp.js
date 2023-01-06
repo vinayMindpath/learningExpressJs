@@ -1,43 +1,31 @@
 // learning express js
 const express = require("express");
-// const { emitWarning } = require("process");
 const app = express();
+
+/* MIDDILE WARE CUSTOM AND BUILT IN*/
+// built-in morgan middleware
 const morgan = require("morgan");
-// importing middleware
-const logger = require("./logger");
-const authorize = require("./middleware2");
+const logger = require("./custom middleware/logger");
+const authorize = require("./custom middleware/middleware2");
+
+//*DIFFERENT ROUTES* */
+//  importing all the required routes
+const homeRoutes = require("./custom routes/homeRoute");
+// get api routes
+const apiRoutes = require("./custom routes/apiRoutes");
+// about routes
+const aboutRoutes = require("./custom routes/aboutRoutes");
 
 // pass middleware to every get method
 app.use(express.static("./public"));
 app.use([logger, authorize]);
 app.use(morgan("tiny"));
-// Home route
-app.get("/", (req, res) => {
-  res.send("<h1>Home</h1>");
-});
 
-// about route
-app.get("/about", (req, res) => {
-  res.send("<h1>Abouts</h1>");
-});
-
-// api/products router
-app.get("/api/products", (req, res) => {
-  res.send("<h1>Product list</h1>");
-});
-
-// item
-app.get("/api/items", (req, res) => {
-  console.log(req.user);
-  res.send("<h1>Items</h1>");
-});
-
-// api
-app.get("/api", (req, res) => {
-  res.send("<h1>Apis</h1>");
-});
+// setting up the different routes
+app.use("/", homeRoutes);
+app.use("/api", apiRoutes);
+app.use("/about", aboutRoutes);
 
 app.listen(3000, () => {
   console.log("listening to the port 3000");
 });
-// app.listen(3000);
