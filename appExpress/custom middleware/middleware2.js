@@ -2,13 +2,12 @@
 
 let authorize = (req, res, next) => {
   const { user } = req.query;
-  if (user === "john") {
-    console.log(user);
-    req.user = { name: "john", id: 3 };
+  const { id } = req.query;
+  console.log(Number(id));
+  if (Number(id)) {
+    // console.log(user);
+    req.id = Number(id);
     next();
-  } else {
-    res.status(401).send("<h1>unauthorized</h1>");
-    // next();
   }
 };
 
