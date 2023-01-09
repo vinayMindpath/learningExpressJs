@@ -1,6 +1,10 @@
 // learning express js
 const express = require("express");
 const app = express();
+const path = require("path");
+
+// path module
+// import { join } from "path";
 
 /* MIDDILE WARE CUSTOM AND BUILT IN*/
 // built-in morgan middleware
@@ -15,11 +19,14 @@ const homeRoutes = require("./custom routes/homeRoute");
 const apiRoutes = require("./custom routes/apiRoutes");
 // about routes
 const aboutRoutes = require("./custom routes/aboutRoutes");
+// const { path } = require("./app");
 
 // pass middleware to every get method
 app.use(express.static("./public"));
 app.use([logger, authorize]);
 app.use(morgan("tiny"));
+// app.use(express.static(join(__dirname, "public")));
+// app.use("/", express.static(path.join(__dirname, "StaticFolder")));
 
 // setting up the different routes
 app.use("/", homeRoutes);
