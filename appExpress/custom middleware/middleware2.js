@@ -1,6 +1,6 @@
 // console the middleware
 
-let authorize = (req, res, next) => {
+let getId = (req, res, next) => {
   const { user } = req.query;
   const { id } = req.query;
   console.log(Number(id));
@@ -11,4 +11,11 @@ let authorize = (req, res, next) => {
   }
 };
 
-module.exports = authorize;
+let getData = (req, res, next) => {
+  const data = req.query;
+  req.data = data;
+  console.log(data);
+  next();
+};
+
+module.exports = { getId, getData };

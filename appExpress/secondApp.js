@@ -10,7 +10,7 @@ const path = require("path");
 // built-in morgan middleware
 const morgan = require("morgan");
 const logger = require("./custom middleware/logger");
-const authorize = require("./custom middleware/middleware2");
+const { getId, getData } = require("./custom middleware/middleware2");
 
 //*DIFFERENT ROUTES* */
 //  importing all the required routes
@@ -19,11 +19,14 @@ const homeRoutes = require("./custom routes/homeRoute");
 const apiRoutes = require("./custom routes/apiRoutes");
 // about routes
 const aboutRoutes = require("./custom routes/aboutRoutes");
+const { get } = require("http");
 // const { path } = require("./app");
 
 // pass middleware to every get method
 app.use(express.static("./public"));
-app.use([logger, authorize]);
+app.use([logger]);
+app.use("/api/user/find", getId);
+app.use("/api/user/add", getData);
 app.use(morgan("tiny"));
 // app.use(express.static(join(__dirname, "public")));
 // app.use("/", express.static(path.join(__dirname, "StaticFolder")));

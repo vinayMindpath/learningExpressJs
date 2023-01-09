@@ -1,10 +1,11 @@
 // import routes from expres
 const { captureRejectionSymbol } = require("events");
-const { query } = require("express");
+const { query, response } = require("express");
 const express = require("express");
 const routes = express.Router();
 // get the user data
-const user = require("../custom data/data");
+var user = require("../custom data/data");
+const { route } = require("./homeRoute");
 
 // api/products router
 routes.get("/products", (req, res) => {
@@ -22,9 +23,9 @@ routes.get("/", (req, res) => {
   res.send("<h1>Apis</h1>");
 });
 
-// routes.get("/user", (req, res) => {
-//   res.status(200).json(user);
-// });
+routes.get("/user", (req, res) => {
+  res.status(200).json(user);
+});
 
 // Not working this time but will need in future
 /*
@@ -49,7 +50,7 @@ routes.get("/user/:id", (req, res) => {
   // res.status(200).jsonp(user);
 });
 */
-routes.get("/user", (req, res) => {
+routes.get("/user/find", (req, res) => {
   console.log(req.id);
   let person = user.find((ele, index) => {
     // console.log(ele);
@@ -73,5 +74,39 @@ routes.get("/user", (req, res) => {
   // res.status(200).jsonp(user);
 });
 
+// adding data to storage
+routes.post("/user/add", (request, respond) => {
+  request.data.id = user.length + 1;
+  console.log(request.data);
+  // respond.write(reqest.body.name);
+  user[user.length] = request.data;
+  // console.log(user[user.length - 1]);
+  console.log(user.length);
+  respond.send("posting data");
+});
+
+// performing delete operation on server without database
+routes.delete("/user/delete", (req, res) => {
+  let data = req.query;
+  console.log(data);
+  console.log(user.length);
+  let found = user.find((value) => {
+    if (value.id === Number(data.id)) {
+      console.log(value);
+      return value;
+    }
+  });
+  if (!found) {
+    console.log("either deleted or not available");
+  }
+  user = user.filter((value) => {
+    if (value.id !== Number(data.id)) {
+      return value;
+    }
+  });
+  // res.write("Deleted");
+  console.log(user.length);
+  return res.send("deleted");
+});
 // now export all the functionality
 module.exports = routes;
