@@ -1,14 +1,15 @@
 // console the middleware
 
 let getId = (req, res, next) => {
-  const { user } = req.query;
+  // const { user } = req.query;
   const { id } = req.query;
   console.log(Number(id));
   if (Number(id)) {
     // console.log(user);
     req.id = Number(id);
-    next();
+    // console.log(req.id);
   }
+  next();
 };
 
 let getData = (req, res, next) => {

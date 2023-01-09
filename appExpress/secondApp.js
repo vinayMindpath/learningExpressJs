@@ -16,24 +16,26 @@ const { getId, getData } = require("./custom middleware/middleware2");
 //  importing all the required routes
 const homeRoutes = require("./custom routes/homeRoute");
 // get api routes
-const apiRoutes = require("./custom routes/apiRoutes");
+const appRoutes = require("./custom routes/appRoutes");
 // about routes
 const aboutRoutes = require("./custom routes/aboutRoutes");
 const { get } = require("http");
 // const { path } = require("./app");
 
 // pass middleware to every get method
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(express.static("./public"));
 app.use([logger]);
-app.use("/api/user/find", getId);
-app.use("/api/user/add", getData);
+app.use("/app/user/find", getId);
+app.use("/app/user/add", getData);
 app.use(morgan("tiny"));
 // app.use(express.static(join(__dirname, "public")));
 // app.use("/", express.static(path.join(__dirname, "StaticFolder")));
 
 // setting up the different routes
 app.use("/", homeRoutes);
-app.use("/api", apiRoutes);
+app.use("/app", appRoutes);
 app.use("/about", aboutRoutes);
 
 app.listen(3000, () => {
