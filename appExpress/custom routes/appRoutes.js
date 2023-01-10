@@ -104,7 +104,7 @@ routes.put("/user/update/:id", (req, res) => {
   });
   console.log(update);
   if (!update) {
-    return res.send("Id not exist");
+    return res.status(401).send("Id not exist");
   }
 
   return res.send("updated ");
@@ -124,7 +124,7 @@ routes.delete("/user/delete", (req, res) => {
   });
   if (!found) {
     console.log("either deleted or not available");
-    return res.send("ID not found");
+    return res.status(401).send("ID not found");
   }
   user = user.filter((value) => {
     if (value.id !== Number(data.id)) {
