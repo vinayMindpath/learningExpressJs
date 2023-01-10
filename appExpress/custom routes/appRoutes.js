@@ -22,6 +22,7 @@ routes.get("/", (req, res) => {
 });
 
 routes.get("/user", (req, res) => {
+  // console.log(req.app);
   res.status(200).json(user);
 });
 
