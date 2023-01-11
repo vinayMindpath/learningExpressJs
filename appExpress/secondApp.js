@@ -1,6 +1,6 @@
 // learning express js
-const express = require("express");
-const app = express();
+const express = require("express"); // Importing express
+const app = express(); //create Express application in app variable
 const path = require("path");
 
 // path module
@@ -19,12 +19,12 @@ const homeRoutes = require("./custom routes/homeRoute");
 const appRoutes = require("./custom routes/appRoutes");
 // about routes
 const aboutRoutes = require("./custom routes/aboutRoutes");
-const { get } = require("http");
+
 // const { path } = require("./app");
 
 // pass middleware to every get method
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(express.json()); //using implicit JSON file rather than dealing with actual database
 app.use(express.static("./public"));
 app.use([logger]);
 app.use("/app/user/find", getId);
@@ -38,6 +38,8 @@ app.use("/", homeRoutes);
 app.use("/app", appRoutes);
 app.use("/about", aboutRoutes);
 
-app.listen(3000, () => {
-  console.log("listening to the port 3000");
-});
+// port environment variable
+const port = process.env.PORT || 3000; // assigned the port to constant varible that the port  is never going to change
+app.listen(port, () => {
+  console.log(`listening to the port ${port}`);
+}); //server is continuously going to listen to the assigned port until it get interrputted by external commands
